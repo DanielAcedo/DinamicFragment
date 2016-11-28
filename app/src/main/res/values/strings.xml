@@ -3,4 +3,12 @@
 
     <string name="btn_frgA">Aceptar</string>
     <string name="txv_frgB">Texto del fragment B</string>
+    <string name="aboutus">
+        <![CDATA[
+        <body bgcolor="crimson">
+        <u style="text-align:center;">Texto</u>
+
+        </body>
+        ]]>
+    </string>
 </resources>

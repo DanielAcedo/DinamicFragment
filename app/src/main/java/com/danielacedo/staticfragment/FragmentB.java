@@ -1,9 +1,11 @@
 package com.danielacedo.staticfragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,9 @@ import android.widget.TextView;
  */
 
 public class FragmentB extends Fragment {
+
+    private static final String TEXTVIEW_TEXT = "textview_text";
+    private static final String TEXTVIEW_SIZE = "textview_size";
 
     private TextView txv_frgB;
 
@@ -28,6 +33,11 @@ public class FragmentB extends Fragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
@@ -36,6 +46,7 @@ public class FragmentB extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         View rootView = inflater.inflate(R.layout.frg_b_layout, container, false);
 
         if(rootView != null){
@@ -43,5 +54,36 @@ public class FragmentB extends Fragment {
         }
 
         return rootView;
+    }
+
+    public void receiveTextParameters(String text, int size){
+        txv_frgB.setText(text);
+        txv_frgB.setTextSize(size);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(TEXTVIEW_TEXT, txv_frgB.getText().toString());
+        outState.putFloat(TEXTVIEW_SIZE, txv_frgB.getTextSize()/getResources().getDisplayMetrics().scaledDensity); //Convert pixels to sp
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if(savedInstanceState != null){
+            String txv_state = savedInstanceState.getString(TEXTVIEW_TEXT);
+            float txv_size = savedInstanceState.getFloat(TEXTVIEW_SIZE);
+
+            if(txv_state != null){
+                txv_frgB.setText(txv_state);
+            }
+
+            if(txv_size != 0){
+                txv_frgB.setTextSize(txv_size);
+            }
+        }
     }
 }

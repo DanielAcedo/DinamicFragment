@@ -1,9 +1,11 @@
 package com.danielacedo.staticfragment;
 
-import android.app.Fragment;
+
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,17 @@ public class FragmentA extends Fragment {
         }
 
         return fragmentA;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try{
+            mCallback = (FragmentIterationListener)activity;
+        }catch (ClassCastException e){
+            throw new ClassCastException(activity.toString()+" must implement FragmentIterationListener");
+        }
     }
 
     @Override
